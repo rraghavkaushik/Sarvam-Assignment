@@ -10,7 +10,7 @@ def parse(pattern: str):
   output = find_axes(output)
   return input, output
 
-def find_axes(pattern:str ):
+def find_axes(pattern:str ) -> :
     return re.findall(r'\.\.\.|[\w]+|\([^\)]+\)', pattern)
 
 def flatten_axes(axes):
@@ -27,7 +27,6 @@ def transpose(tensor, input, output):
   for i in output:
     if i not in input:
       raise ValueError(f"Output axis '{ax}' not found in input axes")
-
   perm = [input.index(ax) for ax in output]
   return tensor.transpose(perm)
 
@@ -59,19 +58,30 @@ def split_axes(ip_ax, tensor_shape, axes_lengths, shape):
 
   sizes = [axes_lengths.get(i) for i in axes]
 
+  if None in sizes:
+    raise ValueError(f"Missing axis lengths for: {[i for i, s in zip(axes, sizes) if s is None]}")
+
   if tensor_shape != np.prod(sizes):
     raise ValueError(f'Mismatch in shapes: {tensor_shape} cannot be split into {sizes}')
     # return None
-  
   for i, s in zip(axes, sizes):
     shape[i] = s
-
   return axes
 
-def merge_axis(op_ax, axes_shape):
-  
-  ax_split = re.findall(r'\w+', op_ax)
-  return int(np.prod([axes_shape[i] for i in ax_split]))
+
+# def merge_axis(op_ax, axes_shape):  
+  # ax_split = re.findall(r'\w+', op_ax)
+  # return int(np.prod([axes_shape[i] for i in ax_split]))
+def merge_axis(op_ax, axes_shape, ellipsis_ax=[]):
+    # Handle ellipsis inside parentheses
+    tokens = re.findall(r'\w+|\.{3}', op_ax)
+    resolved_axes = []
+    for token in tokens:
+        if token == '...':
+            resolved_axes.extend(ellipsis_ax)
+        else:
+            resolved_axes.append(token)
+    return int(np.prod([axes_shape[i] for i in resolved_axes]))
 
 def repeat_new_axes(tensor, input_axes, output, axes_shape, axes_lengths):
   new_ax = [i for i in output if i not in input_axes]
@@ -108,7 +118,6 @@ def ellipsis(input, tensor_shape, axes):
   return ellipsis_dim, ellipsis_ax, n_ellipsis
 
 def extract_axes(expr, ellipsis_ax):
-
     ''' Hint: added this to handle cases where ellipsis occur in the merge axis operation, 
     and also when the case becomes too complex with the transpose part coming in as well '''
     expr = expr.strip("()")
@@ -117,8 +126,7 @@ def extract_axes(expr, ellipsis_ax):
 
 def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
     input, output = parse(pattern)
-    print(input, output)
-
+    # print(input, output)
     # if is_transpose(pattern):
         # print(transpose(tensor, input, output))
         # return transpose(tensor, input, output)
@@ -245,5 +253,4 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
     # print("final output shape:", output_ax_dim)
 
     return tensor_reshaped.reshape(output_ax_dim)
-
                           
