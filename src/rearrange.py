@@ -10,7 +10,7 @@ def parse(pattern: str):
   output = find_axes(output)
   return input, output
 
-def find_axes(pattern):
+def find_axes(pattern:str ):
     return re.findall(r'\.\.\.|[\w]+|\([^\)]+\)', pattern)
 
 def flatten_axes(axes):
@@ -106,7 +106,15 @@ def ellipsis(input, tensor_shape, axes):
   ellipsis_dim = tensor_shape[:n_ellipsis]
   ellipsis_ax = [f'_ellipsis_{i}' for i in range(n_ellipsis)]
   return ellipsis_dim, ellipsis_ax, n_ellipsis
-  
+
+def extract_axes(expr, ellipsis_ax):
+
+    ''' Hint: added this to handle cases where ellipsis occur in the merge axis operation, 
+    and also when the case becomes too complex with the transpose part coming in as well '''
+    expr = expr.strip("()")
+    return [ax if ax != '...' else ell for ax in expr.split() for ell in (ellipsis_ax if ax == '...' else [ax])]
+
+
 def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
     input, output = parse(pattern)
     print(input, output)
@@ -115,7 +123,7 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
         # print(transpose(tensor, input, output))
         # return transpose(tensor, input, output)
     
-    print("...")
+    # print("...")
     axes_shape = {}
     input_axes = []
     # output_axes = []
@@ -173,7 +181,7 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
             input_axes.append(ellipsis_ax[i])
             idx += 1
 
-        elif ip_ax.startswith('(') and ip_ax.endswith(')'):
+        elif ip_ax.startswith("(") and ip_ax.endswith(")"):
           ax_split = split_axes(ip_ax, tensor_shape[idx], axes_lengths, axes_shape)
           input_axes.extend(ax_split)
           idx += 1
@@ -184,7 +192,7 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
           idx += 1
       
     # print(axes_shape)
-    print("Inferred Input Axes:", input_axes)
+    # print("Inferred Input Axes:", input_axes)
     # tensor = tensor.reshape()
     tensor_reshaped = tensor.reshape([axes_shape[i] for i in input_axes])
     # print(tensor_reshaped)
@@ -194,20 +202,34 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
       tensor_reshaped, input_axes = repeat_new_axes(tensor_reshaped, input_axes, output, axes_shape, axes_lengths)
     
     # print('...', input_axes, output)
-    print(tensor_reshaped, input_axes)
+    # print(tensor_reshaped, input_axes)
 
+    final_axes_order = []
+    for op_ax in output:
+        if op_ax == '...':
+            final_axes_order.extend(ellipsis_ax)
+        elif op_ax.startswith("(") and op_ax.endswith(")"):
+            final_axes_order.extend(extract_axes(op_ax, ellipsis_ax))
+            # continue
+        else:
+            final_axes_order.append(op_ax)
+
+    if input_axes != final_axes_order:
+        perm = [input_axes.index(ax) for ax in final_axes_order]
+        tensor_reshaped = tensor_reshaped.transpose(perm)
+        input_axes = final_axes_order
+      
     output_ax_dim = [] 
     for op_ax in output:
         if op_ax == '...':
           # continue
           output_ax_dim.extend([axes_shape[i] for i in ellipsis_ax]) 
-        elif op_ax.startswith('(') and op_ax.endswith(')'):
+        elif op_ax.startswith("(") and op_ax.endswith(")"):
           output_ax_dim.append(merge_axis(op_ax, axes_shape)) 
         else:
           output_ax_dim.append(axes_shape[op_ax]) 
 
-    print("final output shape:", output_ax_dim)
-
+    # print("final output shape:", output_ax_dim)
     return tensor_reshaped.reshape(output_ax_dim)
 
 
