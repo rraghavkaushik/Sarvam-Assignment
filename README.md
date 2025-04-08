@@ -28,6 +28,11 @@ I have re-iterated this process to handle all cases to the best of my knowledge.
 
 ## Code
 
+Steps to execute the code:
 
+1. Clone the repository.
+'''
+git clone https://github.com/rraghavkaushik/Sarvam-Assignment
+'''
 
 
