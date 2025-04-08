@@ -1,4 +1,5 @@
 import numpy as np
+from src.rearrange import rearrange 
 
 invalid_patterns = [
     "a b -> (a b",               
