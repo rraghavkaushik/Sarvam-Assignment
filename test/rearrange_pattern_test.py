@@ -1,3 +1,6 @@
+import numpt as n
+from src.rearrange import rearrange
+
 rearrange_patterns = [
     ("a b -> b a"),
 
