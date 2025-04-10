@@ -1,5 +1,7 @@
 # Sarvam-Assignment
+This repository contains a custom implementation of the `rearrange` function, inspired by the `einops.rearrange` operation. This implementation supports transposition, splitting, merging, repeating axes and ellipsis handling in NumPy arrays.
 
+---
 ## Implementing rearrange method of einops from scratch
 
 ### My approach and design decisions in brief:
@@ -28,33 +30,71 @@ I have re-iterated this process to handle all cases to the best of my knowledge.
 
 ## Code
 
-Steps to execute the code:
+Steps to clone the repository and run the code.
 
-1. Clone the repository.
+#### 1. Clone the Repository
 
-```git clone https://github.com/rraghavkaushik/Sarvam-Assignment```
+```bash
+git clone https://github.com/rraghavkaushik/Sarvam-Assignment
+```
 
-3. Then, change current working directory
+#### 2. Change Directory
 
-```cd Sarcvam-Assignment```
+```bash
+cd Sarvam-Assignment
+```
 
-3. Run the rearrange.py file
+#### 3. Run the Main File
 
-```python -m src.rearrange```
+To execute the custom `rearrange` implementation:
 
-4. Run test:
+```bash
+python -m src.rearrange
+```
 
+---
 
-Input pattern testing:
+### Running Tests
 
-```python -m test.input_pattern_test```
+Please refer to 'einops-rearrange_from_scratch.ipynb' from notebook folder for case by case implementation. 
 
+The repo includes multiple test modules to validate functionality against known cases and ensure correctness.
 
-Equivalent pattern testing:
+#### Input Pattern Testing
 
-```python -m test.rearrange_pattern_test```
+Tests different rearrangement patterns with various axes and tensor shapes.
 
+```bash
+python -m test.input_pattern_test
+```
 
-Tests from einops repo:
+#### Equivalent Pattern Testing
 
-```python -m test.test_from_einops```
+Validates whether different patterns that should produce the same result actually do.
+
+```bash
+python -m test.rearrange_pattern_test
+```
+
+#### Runs sample test cases directly adapted from the original `einops` repo to ensure parity.
+
+```bash
+python -m test.test_from_einops
+```
+
+---
+
+### Structure of the repo
+
+```
+Sarvam-Assignment/
+├── notebook/
+│   └── einops-rearrange_from_scratch.ipynb
+├── src/
+│   └── rearrange.py             
+├── test/
+│   ├── input_pattern_test.py     
+│   ├── rearrange_pattern_test.py 
+│   └── test_from_einops.py       
+└──README.md
+```
