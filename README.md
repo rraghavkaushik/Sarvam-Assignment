@@ -31,8 +31,12 @@ I have re-iterated this process to handle all cases to the best of my knowledge.
 Steps to execute the code:
 
 1. Clone the repository.
-'''
-git clone https://github.com/rraghavkaushik/Sarvam-Assignment
-'''
+  ```git clone https://github.com/rraghavkaushik/Sarvam-Assignment```
+
+2. Then, change current working directory
+  ```cd Sarcvam-Assignment```
+
+3. Run the rearrange.py file
+  ```python -m src/rearrange```
 
 
