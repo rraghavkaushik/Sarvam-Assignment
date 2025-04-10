@@ -1,7 +1,6 @@
 # Sarvam-Assignment
-This repository contains a custom implementation of the `rearrange` function, inspired by the `einops.rearrange` operation. This implementation supports transposition, splitting, merging, repeating axes and ellipsis handling in NumPy arrays.
+This repository contains my implementation of the `rearrange` function, inspired by the `einops.rearrange` operation. This implementation supports transposition, splitting, merging, repeating axes and ellipsis handling in NumPy arrays.
 
----
 ## Implementing rearrange method of einops from scratch
 
 ### My approach and design decisions in brief:
@@ -54,9 +53,9 @@ python -m src.rearrange
 
 ---
 
-### Running Tests
+## Running Tests
 
-Please refer to 'einops-rearrange_from_scratch.ipynb' from notebook folder for case by case implementation. 
+Please refer to 'einops-rearrange_from_scratch.ipynb' from notebook folder for case by case testing. 
 
 The repo includes multiple test modules to validate functionality against known cases and ensure correctness.
 
@@ -82,7 +81,6 @@ python -m test.rearrange_pattern_test
 python -m test.test_from_einops
 ```
 
----
 
 ### Structure of the repo
 
