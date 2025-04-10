@@ -51,7 +51,6 @@ To execute the custom `rearrange` implementation:
 python -m src.rearrange
 ```
 
----
 
 ## Running Tests
 
