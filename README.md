@@ -34,13 +34,13 @@ Steps to clone the repository and run the code.
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/rraghavkaushik/Sarvam-Assignment
+git clone https://github.com/rraghavkaushik/Einops-rearrange_from_scratch
 ```
 
 #### 2. Change Directory
 
 ```bash
-cd Sarvam-Assignment
+cd Einops-rearrange_from_scratch
 ```
 
 #### 3. Run the Main File
