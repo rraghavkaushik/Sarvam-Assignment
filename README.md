@@ -1,17 +1,18 @@
-# Rearrange (inspired by the rearrange fucntion from einops)
+# TensorCrafter 
+An efficient, from-scratch reimplementation of einops.rearrange with full support for complex patterns, split axes, ellipses, and error handling. Built to be robust, iterative, and optimized without over-engineering.
 
 ## Steps to clone the repository and run the code.
 
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/rraghavkaushik/Einops-rearrange_from_scratch
+git clone https://github.com/rraghavkaushik/TensorCrafter
 ```
 
 #### 2. Change Directory
 
 ```bash
-cd Einops-rearrange_from_scratch
+cd TensorCrafter
 ```
 
 #### 3. Run the Main File
@@ -25,7 +26,7 @@ python -m src.rearrange
 
 ## Running Tests
 
-Please refer to 'einops-rearrange_from_scratch.ipynb' from notebook folder for case by case testing. 
+Please refer to 'TensorCrafter_impl.ipynb' from the notebooks folder for case by case testing. 
 
 The repo includes multiple test modules to validate functionality against known cases and ensure correctness.
 
@@ -83,9 +84,9 @@ I have re-iterated this process to handle all cases to the best of my knowledge.
 ### Structure of the repo
 
 ```
-Einops-rearrange_from_scratch/
-├── notebook/
-│   └── einops-rearrange_from_scratch.ipynb
+TensorCrafter/
+├── notebooks/
+│   └── TensorCrafter_impl.ipynb
 ├── src/
 │   └── rearrange.py             
 ├── test/
