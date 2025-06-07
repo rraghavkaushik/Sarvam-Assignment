@@ -1,5 +1,5 @@
 # TensorCrafter 
-An efficient, from-scratch reimplementation of einops.rearrange with full support for complex patterns, split axes, ellipses, and error handling. Built to be robust, iterative, and optimized without over-engineering.
+TensorCrafter is an efficient, from-scratch reimplementation of einops.rearrange with full support for complex patterns, split axes, ellipses, and error handling. Built to be robust, iterative, and optimized without over-engineering.
 
 ## Steps to clone the repository and run the code.
 
