@@ -267,7 +267,7 @@ def rearrange(tensor: np.array, pattern: str, **axes_lengths) -> np.ndarray:
             final_axes_order.append(op_ax)
 
     if input_axes != final_axes_order and not new_axes_to_repeat: 
-        ''' Hint: added the not repeat_axes condition, as the aces wont match in case of repeat axes operation'''
+        ''' Hint: added the not repeat_axes condition, as the axes wont match in case of repeat axes operation'''
         perm = [input_axes.index(ax) for ax in final_axes_order]
         tensor_reshaped = tensor_reshaped.transpose(perm)
         input_axes = final_axes_order
